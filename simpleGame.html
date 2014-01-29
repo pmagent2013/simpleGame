@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+      <title>Simple Game</title>
+      <script>
+         // Global Variables
+         
+		 
+		 function Create2DArray(rows) {
+			var locationArray = [];
+			for (var i=0;i<rows;i++) {
+			locationArray[i] = [];
+			}		
+
+			return locationArray;
+			}
+		var locationArray = Create2DArray(9);
+
+		locationArray[0][0] = 0;
+		locationArray[0][1] = 1;
+		locationArray[0][2] = 2;
+		locationArray[1][0] = 3;
+		locationArray[1][1] = 4;
+		locationArray[1][2] = 5;
+		locationArray[2][0] = 6;
+		locationArray[2][1] = 7;
+		locationArray[2][2] = 8;
+		
+		
+		var currentLocale = locationArray[1][1];
+		
+		
+         function updateDisplay() {
+            var msg = "";
+			switch (currentLocale) {
+               case 0:  msg = "You have entered the enemy base";
+                               break;
+               case 1:  msg = "You are offworld";
+                               break;
+               case 2: msg = "You are in a village";
+                               break;
+			   case 3:  msg = "In a office";
+                               break;
+               case 4:  msg = "You are in the Gateroom";
+                               break;
+               case 5: msg = "In Armory";
+                               break;
+			   case 6:  msg = "Sleeping Quaters";
+                               break;
+               case 7:  msg = "Laboratory";
+                               break;
+               case 8: msg = "Cafe";
+                               break;
+               default      : msg = "you cannot go that way";
+            }
+            var taPtr = document.getElementById("taDisplay");
+            var history = taPtr.value;
+            taPtr.value = msg + "\n" + history; 
+         }
+         
+         function go(dir, currentLocation) {
+            var before = currentLocale;
+			if (dir === 'north'){
+				currentLocale-=3;
+			}
+			else if (dir === 'south'){
+				currentLocale+=3;
+			}
+			else if (dir === 'east'){
+				currentLocale+=1;
+			}
+			else if (dir === 'west'){
+				currentLocale-=1;
+			}
+				
+			
+			
+            /*switch(dir) {
+               case('north'):
+                  if (currentLocale === "dungeon") {
+                     currentLocale = "theLab";
+                  } else if (currentLocale === "theLab") {
+                     currentLocale = "tardis"
+                  } else {
+                     // TODO: Fix this.
+                     alert("You can't go that way.");
+                  }
+                  break;
+               case('south'):
+                  if (currentLocale === "tardis") {
+                     currentLocale = "theLab";
+                  } else if (currentLocale === "theLab") {
+                     currentLocale = "dungeon"
+                  } else {
+                     // TODO: Fix this.
+                     alert("You can't go that way.");
+                  }
+                  break;
+               case('east'):
+                  break;
+               case('west'):
+                  break;
+               default: alert("Internal Error: unknown direction: " + dir + ".");
+            }*/
+            if (currentLocale != before) {
+               updateDisplay();
+            }
+         }
+      </script>
+   </head>
+   <body onload="updateDisplay();">
+      <h2>Simple Game</h2>
+      <textarea id="taDisplay" style="width:400px; height:200px;">
+      </textarea>
+      <br>
+      <input type="button"
+             value = "North"
+             onclick="go('north', currentLocale);>
+      <input type="button"
+             value = "South"
+             onclick="go('south', currentLocale);">
+      <input type="button"
+             value = "East"
+             onclick="go('east', currentLocale);">
+      <input type="button"
+             value = "West"
+             onclick="go('west', currentLocale);">
+	  <br>
+	<input type="text" id="textInputBox" size="2" value="">
+	<input type="button" value="Go"
+	onclick="textInput=(document.getElementById('textInputBox').value)
+	if(textInput='n'){
+		go('north', currentLocale);
+	}
+	else if(textInput='s'){
+		go('south', currentLocale);
+	}
+	else if(textInput='e'){
+		go('east', currentLocale);
+	}
+	else if(textInput='w'){
+		go('west', currentLocale);
+	}
+	">
+
+   </body>
+</html>
