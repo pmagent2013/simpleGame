@@ -16,7 +16,16 @@
 			return locationArray;
 			}
 		var locationArray = Create2DArray(9);
-
+		var points = 0;
+		var alreadyVisited0 = false;
+		var alreadyVisited1 = false;
+		var alreadyVisited2 = false;
+		var alreadyVisited3 = false;
+		var alreadyVisited4 = false;
+		var alreadyVisited5 = false;
+		var alreadyVisited6 = false;
+		var alreadyVisited7 = false;
+		var alreadyVisited8 = false;
 		locationArray[0][0] = 0;
 		locationArray[0][1] = 1;
 		locationArray[0][2] = 2;
@@ -33,31 +42,52 @@
 		
          function updateDisplay() {
             var msg = "";
-			switch (currentLocale) {
-               case 0:  msg = "You have entered the enemy base";
-                               break;
-               case 1:  msg = "You are offworld";
-                               break;
-               case 2: msg = "You are in a village";
-                               break;
-			   case 3:  msg = "In a office";
-                               break;
-               case 4:  msg = "You are in the Gateroom";
-                               break;
-               case 5: msg = "In Armory";
-                               break;
-			   case 6:  msg = "Sleeping Quaters";
-                               break;
-               case 7:  msg = "Laboratory";
-                               break;
-               case 8: msg = "Cafe";
-                               break;
-               default      : msg = "you cannot go that way";
-            }
+				switch (currentLocale) {
+				   
+				   case 0:  msg = "You have entered the enemy base";
+							score();
+							alreadyVisited0 = true;
+								   break;
+				   case 1:  msg = "You are offworld";
+							score();
+							alreadyVisited1 = true;
+								   break;
+				   case 2: msg = "You are in a village";
+						   score();
+						   alreadyVisited2 = true;
+								   break;
+				   case 3:  msg = "In a office";
+							score();
+							alreadyVisited3 = true;
+								   break;
+				   case 4:  msg = "You are in the Gateroom";
+							score();
+							alreadyVisited4 = true;
+								   break;
+				   case 5: msg = "In Armory";
+						   score();
+						   alreadyVisited5 = true;
+								   break;
+				   case 6:  msg = "Sleeping Quaters";
+							score();
+							alreadyVisited6 = true;
+								   break;
+				   case 7:  msg = "Laboratory";
+							score();
+							alreadyVisited7 = true;
+								   break;
+				   case 8: msg = "Cafe";
+							score();
+							alreadyVisited8 = true;
+								   break;
+				   case 100: msg = "Thanks for playing";
+								   break;
+				   default      : msg = "you cannot go that way";
+				}
             var taPtr = document.getElementById("taDisplay");
             var history = taPtr.value;
-            taPtr.value = msg + "\n" + history; 
-         }
+            taPtr.value = msg + "\n" + history;
+		}
          
          function go(dir, currentLocation) {
             var before = currentLocale;
@@ -73,50 +103,41 @@
 			else if (dir === 'west'){
 				currentLocale-=1;
 			}
-				
-			
-			
-            /*switch(dir) {
-               case('north'):
-                  if (currentLocale === "dungeon") {
-                     currentLocale = "theLab";
-                  } else if (currentLocale === "theLab") {
-                     currentLocale = "tardis"
-                  } else {
-                     // TODO: Fix this.
-                     alert("You can't go that way.");
-                  }
-                  break;
-               case('south'):
-                  if (currentLocale === "tardis") {
-                     currentLocale = "theLab";
-                  } else if (currentLocale === "theLab") {
-                     currentLocale = "dungeon"
-                  } else {
-                     // TODO: Fix this.
-                     alert("You can't go that way.");
-                  }
-                  break;
-               case('east'):
-                  break;
-               case('west'):
-                  break;
-               default: alert("Internal Error: unknown direction: " + dir + ".");
-            }*/
+			else if (dir === 'quit'){
+				currentLocale=100;
+			}
+							
             if (currentLocale != before) {
                updateDisplay();
             }
          }
+		
+		function score(){
+			visit="alreadyVisited"+currentLocale;
+			var pointPtr = document.getElementById('pointDisplay');
+			if((visit)!=true){			
+			points+=5;
+			}
+			msg=points;
+			pointPtr.value = msg;
+		}			
+			
+		
       </script>
    </head>
+   
+   
    <body onload="updateDisplay();">
+   
       <h2>Simple Game</h2>
-      <textarea id="taDisplay" style="width:400px; height:200px;">
-      </textarea>
+	  
+      <textarea id="taDisplay" style="width:400px; height:200px;"></textarea>
+	  <textarea id="pointDisplay" style="width:100px; height:50px;"></textarea>
       <br>
+	  <!--button based movement-->
       <input type="button"
              value = "North"
-             onclick="go('north', currentLocale);>
+             onclick="go('north', currentLocale);">
       <input type="button"
              value = "South"
              onclick="go('south', currentLocale);">
@@ -127,22 +148,44 @@
              value = "West"
              onclick="go('west', currentLocale);">
 	  <br>
-	<input type="text" id="textInputBox" size="2" value="">
+	  
+	<!--text based movement-->  
+	<input type="text" id="textInputBox" size="1" value="">
 	<input type="button" value="Go"
 	onclick="textInput=(document.getElementById('textInputBox').value)
-	if(textInput='n'){
-		go('north', currentLocale);
-	}
-	else if(textInput='s'){
-		go('south', currentLocale);
-	}
-	else if(textInput='e'){
-		go('east', currentLocale);
-	}
-	else if(textInput='w'){
-		go('west', currentLocale);
-	}
-	">
+	var taPtr = document.getElementById('taDisplay');
+	var history = taPtr.value;
+		if(textInput==='n'){
+			go('north', currentLocale);
+		}
+		else if(textInput==='s'){
+			go('south', currentLocale);
+		}
+		else if(textInput==='e'){
+			go('east', currentLocale);
+		}
+		else if(textInput==='w'){
+			go('west', currentLocale);
+		}
+		else if(textInput==='q'){
+			go('quit', currentLocale);
+		}
+		else if(textInput==='d'){
+			msg = 'you start dancing';
+			taPtr.value = msg + '\n' + history;
+		}
+		else if(textInput==='h'){
+			msg = ' n: Go North \n s: Go South \n e: Go East \n w: Go West \n d: Dance \n h: Help';
+			taPtr.value = msg + '\n' + history;
+		}
+		else{
+		msg = 'That key does not correspond to an action. To see all possible actions type h';
+		taPtr.value = msg + '\n' + history;
+		}
+		
+            
+            
+		">
 
    </body>
 </html>
