@@ -15,7 +15,7 @@
 				 [0,0,0,0,0]];
             
 		var currentLocale=map[x][y];
-		
+		var inventoryArray = [];
 		function updateDisplay() {
             var msg = "";
 				switch (currentLocale) {
@@ -120,8 +120,45 @@
                updateDisplay();
             }
          }
-		 document.onkeydown = function() {
+		function textBasedMovement(){
+			var textInput=(document.getElementById('textInputBox').value);
+			var taPtr = document.getElementById('taDisplay');
+			var history = taPtr.value;
+			if(textInput==='n' || textInput==='N'){
+				go('north', currentLocale);
+			}
+			else if(textInput==='s' || textInput==='S'){
+				go('south', currentLocale);
+			}
+			else if(textInput==='e' || textInput==='E'){
+				go('east', currentLocale);
+			}
+			else if(textInput==='w' || textInput==='W'){
+				go('west', currentLocale);
+			}
+			else if(textInput==='q' || textInput==='Q'){
+				go('quit', currentLocale);
+			}
+			else if(textInput==='d' || textInput==='D'){
+				msg = 'you start dancing';
+				taPtr.value = msg + '\n' + history;
+			}
+			else if(textInput==='h' || textInput==='H'){
+				msg = ' n: Go North \n s: Go South \n e: Go East \n w: Go West \n d: Dance \n h: Help';
+				taPtr.value = msg + '\n' + history;
+			}
+			else{
+			msg = 'That key does not correspond to an action. To see all possible actions type h';
+			taPtr.value = msg + '\n' + history;
+			}
+			 
+		}
+		 
+		document.onkeydown = function() {
 		switch (window.event.keyCode) {
+			case 13:
+				textBasedMovement();
+				break;
 			case 37:
 				go('west', currentLocale);
 				break;
@@ -134,8 +171,8 @@
 			case 40:
 				go('south', currentLocale);
 				break;
-    }	
-};
+			}	
+		};
 		
 		function score(){
 			visit="alreadyVisited"+currentLocale;
@@ -179,42 +216,9 @@
 	  <br>
 	  
 	<!--text based movement-->  
-	<input type="text" id="textInputBox" size="1" value="">
+	<input type="text" id="textInputBox" size="1" value="" >
 	<input type="button" value="Go"
-	onclick="textInput=(document.getElementById('textInputBox').value)
-	var taPtr = document.getElementById('taDisplay');
-	var history = taPtr.value;
-		if(textInput==='n' || textInput==='N'){
-			go('north', currentLocale);
-		}
-		else if(textInput==='s' || textInput==='S'){
-			go('south', currentLocale);
-		}
-		else if(textInput==='e' || textInput==='E'){
-			go('east', currentLocale);
-		}
-		else if(textInput==='w' || textInput==='W'){
-			go('west', currentLocale);
-		}
-		else if(textInput==='q' || textInput==='Q'){
-			go('quit', currentLocale);
-		}
-		else if(textInput==='d' || textInput==='D'){
-			msg = 'you start dancing';
-			taPtr.value = msg + '\n' + history;
-		}
-		else if(textInput==='h' || textInput==='H'){
-			msg = ' n: Go North \n s: Go South \n e: Go East \n w: Go West \n d: Dance \n h: Help';
-			taPtr.value = msg + '\n' + history;
-		}
-		else{
-		msg = 'That key does not correspond to an action. To see all possible actions type h';
-		taPtr.value = msg + '\n' + history;
-		}
-		
-            
-            
-		">
+	onclick="textBasedMovement();">
 
    </body>
 </html>
