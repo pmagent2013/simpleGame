@@ -120,6 +120,22 @@
                updateDisplay();
             }
          }
+		 document.onkeydown = function() {
+		switch (window.event.keyCode) {
+			case 37:
+				go('west', currentLocale);
+				break;
+			case 38:
+				go('north', currentLocale);
+				break;
+			case 39:
+				go('east', currentLocale);
+				break;
+			case 40:
+				go('south', currentLocale);
+				break;
+    }	
+};
 		
 		function score(){
 			visit="alreadyVisited"+currentLocale;
