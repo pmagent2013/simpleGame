@@ -9,10 +9,10 @@
 		var x=2;
 		var y=2;
 		var map=[[0,0,0,0,0],
-				 [0,0,1,2,0],
-				 [0,3,4,5,0],
-				 [0,6,7,8,0],
-				 [0,0,0,0,0]];
+             [0,0,1,2,0],
+             [0,3,4,5,0],
+             [0,6,7,8,0],
+             [0,0,0,0,0]];
             
 		var currentLocale=map[x][y];
 		var inventoryArray = [];
@@ -66,22 +66,12 @@
 			
 		}
          
-         function go(dir, currentLocation) {
+      function go(dir, currentLocation) {
             var before = currentLocale;
-			/*
-			if(map[x-1][y]!=0){
-				document.getElementById('northButton').disabled = false;
-			}
-			if(map[x+1][y]!=0){
-				document.getElementById('southButton').disabled = false;
-			}
-			if(map[x][y-1]!=0){
-				document.getElementById('westButton').disabled = false;
-			}
-			if(map[x][y+1]!=0){
-				document.getElementById('eastButton').disabled = false;
-			}
-			*/
+			
+			 
+			
+			
 			if (dir === 'north'){
 				if(map[x-1][y]!=0)
 				currentLocale=map[x-=1][y];
@@ -102,7 +92,18 @@
 			else if (dir === 'quit'){
 				currentLocale=100;
 			}
-			/*
+			if(map[x-1][y]!=0){
+				document.getElementById('northButton').disabled = false;
+			}
+			if(map[x+1][y]!=0){
+				document.getElementById('southButton').disabled = false;
+			}
+			if(map[x][y-1]!=0){
+				document.getElementById('westButton').disabled = false;
+			}
+			if(map[x][y+1]!=0){
+				document.getElementById('eastButton').disabled = false;
+			}
 			if(map[x-1][y]===0){
 				document.getElementById('northButton').disabled = true;
 			}
@@ -115,7 +116,9 @@
 			if(map[x][y+1]===0){
 				document.getElementById('eastButton').disabled = true;
 			}
-			*/	
+			
+			
+			
             if (currentLocale != before) {
                updateDisplay();
             }
