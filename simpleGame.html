@@ -62,12 +62,22 @@
 		
 		function updateDisplay() {
             var msg = "";
+			if(points===0)
+			{
+				msg = " You awaken on Atlatis in the Pegasus Galaxy. The Stargate is directly in front of you, you can use it to gate offworld. Be careful, for the planet"+ 
+				"you can gate to has both friendly people and enemies. You must attack the enemy base and obtain the key intel they have."+
+				"Do not attack the enemy base without a weapon and allies or you will surely die. The fate of Atlantis is in you hands."+
+				"Instructions: n: Go North s: Go South e: Go East w: Go West d: Dance h: Help i: Inventory p: Pickup. You may view these instructions again at any time by"+
+				"pressing h. \n You are in the Gateroom";
+			}
+			else{
 			msg = locales[currentLocale].description;
+			}
 			score();
 			var taPtr = document.getElementById("taDisplay");
             var history = taPtr.value;
-            taPtr.value = msg + "\n" + history;
-			
+			taPtr.value = history + "\n" + msg;
+			taDisplay.scrollTop = taDisplay.scrollHeight - taDisplay.clientHeight;
 		}
          
         function go(dir, currentLocation) {
@@ -143,15 +153,15 @@
 			}
 			else if(textInput==='d' || textInput==='D'){
 				msg = 'you start dancing';
-				taPtr.value = msg + '\n' + history;
+				taPtr.value = history + "\n" + msg;
 			}
 			else if(textInput==='h' || textInput==='H'){
 				msg = ' n: Go North \n s: Go South \n e: Go East \n w: Go West \n d: Dance \n h: Help \n i: Inventory \n p: Pickup';
-				taPtr.value = msg + '\n' + history;
+				taPtr.value = history + "\n" + msg;
 			}
 			else if(textInput==='i' || textInput==='I'){
 				msg = 'The items currently in your inventory are '+ inventory.toString() + '.'; 
-				taPtr.value = msg + '\n' + history;
+				taPtr.value = history + "\n" + msg;
 			}
 			else if(textInput==='p' || textInput==='P'){
 				pickup(currentLocale);
@@ -159,7 +169,7 @@
 			
 			else{
 			msg = 'That key does not correspond to an action. To see all possible actions type h';
-			taPtr.value = msg + '\n' + history;
+			taPtr.value = history + "\n" + msg;
 			}
 			 
 		}
@@ -202,7 +212,7 @@
 			else{
 				msg = 'There is nothing here to pickup.';
 			}
-			taPtr.value = msg + '\n' + history;
+			taPtr.value = history + "\n" + msg;
 		}
 		
 			
