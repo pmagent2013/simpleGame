@@ -19,6 +19,10 @@
 		var description = "";
 		var item = "";
 		var points;
+		var itemID = "";
+		var itemName = "";
+		var itemDescription = "";
+		var itemCount = "";
 		var locale = function(id, name, description, item, points){
 			this.id = id;
 			this.name = name;
@@ -27,18 +31,35 @@
 			this.points = points;
 		}
 		var locales = [];
-		locales.push(new locale('enemyBase', 'Enemy Base', 'You have entered the enemy base', 'none', 5));
-		locales.push(new locale('offworld', 'Offworld', 'You are offworld', 'none', 5));
-		locales.push(new locale('village', 'Village', 'You are in a village', 'none', 5));
-		locales.push(new locale('office', 'Office', 'You are in an office', 'none', 5));
-		locales.push(new locale('gateroom', 'Gateroom', 'You are in the gateroom', 'none', 5));
-		locales.push(new locale('armory', 'Armory', 'You are in the armory', 'gun', 5));
-		locales.push(new locale('sleepingquaters', 'Sleeping Quarters', 'You are in the sleeping quarters', 'none', 5));
-		locales.push(new locale('laboratory', 'Laboratory', 'You are in the laboratory', 'none', 5));
-		locales.push(new locale('cafe', 'Cafe', 'You are in the cafe', 'none', 5));
+		locales.push(new locale('enemyBase', 'Enemy Base', 'You have entered the enemy base', 'intel', 5)); 							//locale 0
+		locales.push(new locale('offworld', 'Offworld', 'You are offworld', 'none', 5));											//locale 1
+		locales.push(new locale('village', 'Village', 'You are in a village', 'none', 5));											//locale 2
+		locales.push(new locale('office', 'Office', 'You are in an office', 'stapler', 5));											//locale 3
+		locales.push(new locale('gateroom', 'Gateroom', 'You are in the gateroom', 'none', 5));										//locale 4
+		locales.push(new locale('armory', 'Armory', 'You are in the armory', 'gun', 5));											//locale 5
+		locales.push(new locale('sleepingquaters', 'Sleeping Quarters', 'You are in the sleeping quarters', 'none', 5));			//locale 6
+		locales.push(new locale('laboratory', 'Laboratory', 'You are in the laboratory', 'none', 5));								//locale 7
+		locales.push(new locale('cafe', 'Cafe', 'You are in the cafe', 'none', 5));													//locale 8
+		var item = function(itemID, itemName, itemDescription, itemCount){
+			this.itemID = itemID;
+			this.itemName = itemName;
+			this.itemDescription = itemDescription;
+			this.itemCount = itemCount;
+		}
+		var items = [];
+		items.push(new item('intel', 'Enemy Intel', 'You have picked up a key piece of enemy inteligence, it can be used to help win the war', 1));	//locale 0
+		items.push(new item('na', 'na', 'na', 0));																									//locale 1
+		items.push(new item('na', 'na', 'na', 0));																									//locale 2
+		items.push(new item('stapler', 'Stapler', 'You have picked up a stapler, it can staple paper together', 1));								//locale 3
+		items.push(new item('na', 'na', 'na', 0));																									//locale 4
+		items.push(new item('gun', 'Assault Rifle', 'You have picked up an Assault Rifle, it can be used to kill you enemies', 1));					//locale 5
+		items.push(new item('na', 'na', 'na', 0));																									//locale 6
+		items.push(new item('na', 'na', 'na', 0));																									//locale 7
+		items.push(new item('na', 'na', 'na', 0));																									//locale 8
 		var currentLocale=map[x][y];
-		var inventoryArray = [];
+		var inventory = [];
 		var pointsArray = [];
+		
 		function updateDisplay() {
             var msg = "";
 			msg = locales[currentLocale].description;
@@ -125,9 +146,17 @@
 				taPtr.value = msg + '\n' + history;
 			}
 			else if(textInput==='h' || textInput==='H'){
-				msg = ' n: Go North \n s: Go South \n e: Go East \n w: Go West \n d: Dance \n h: Help';
+				msg = ' n: Go North \n s: Go South \n e: Go East \n w: Go West \n d: Dance \n h: Help \n i: Inventory \n p: Pickup';
 				taPtr.value = msg + '\n' + history;
 			}
+			else if(textInput==='i' || textInput==='I'){
+				msg = 'The items currently in your inventory are '+ inventory.toString() + '.'; 
+				taPtr.value = msg + '\n' + history;
+			}
+			else if(textInput==='p' || textInput==='P'){
+				pickup(currentLocale);
+			}
+			
 			else{
 			msg = 'That key does not correspond to an action. To see all possible actions type h';
 			taPtr.value = msg + '\n' + history;
@@ -160,7 +189,22 @@
 			locales[currentLocale].points=0;
 			msg=points;
 			pointPtr.value = msg;
-		}			
+		}
+		function pickup(){
+			var taPtr = document.getElementById('taDisplay');
+			var history = taPtr.value;
+			if(locales[currentLocale].item!="none"){
+				inventory.push(locales[currentLocale].item);
+				msg = items[currentLocale].itemDescription;
+				locales[currentLocale].item = 'none';
+				items[currentLocale].itemCount = 0;
+			}
+			else{
+				msg = 'There is nothing here to pickup.';
+			}
+			taPtr.value = msg + '\n' + history;
+		}
+		
 			
 		
       </script>
