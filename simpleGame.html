@@ -23,15 +23,15 @@
 		var itemName = "";
 		var itemDescription = "";
 		var itemCount = "";
-		var locale = function(id, name, description, item, points){
+		var locale = function(id, name, description, item, points){ /* TODO: ensure these are all required and being used correctly */
 			this.id = id;
 			this.name = name;
 			this.description = description;
 			this.item = item;
 			this.points = points;
 		}
-		var locales = [];
-		locales.push(new locale('enemyBase', 'Enemy Base', 'You have entered the enemy base', 'intel', 5)); 							//locale 0
+		var locales = []; //all locations that are in game
+		locales.push(new locale('enemyBase', 'Enemy Base', 'You have entered the enemy base', 'intel', 5)); 						//locale 0
 		locales.push(new locale('offworld', 'Offworld', 'You are offworld', 'none', 5));											//locale 1
 		locales.push(new locale('village', 'Village', 'You are in a village', 'none', 5));											//locale 2
 		locales.push(new locale('office', 'Office', 'You are in an office', 'stapler', 5));											//locale 3
@@ -40,13 +40,13 @@
 		locales.push(new locale('sleepingquaters', 'Sleeping Quarters', 'You are in the sleeping quarters', 'none', 5));			//locale 6
 		locales.push(new locale('laboratory', 'Laboratory', 'You are in the laboratory', 'none', 5));								//locale 7
 		locales.push(new locale('cafe', 'Cafe', 'You are in the cafe', 'none', 5));													//locale 8
-		var item = function(itemID, itemName, itemDescription, itemCount){
+		var item = function(itemID, itemName, itemDescription, itemCount){ /* TODO: ensure these are all required and being used correctly */
 			this.itemID = itemID;
 			this.itemName = itemName;
 			this.itemDescription = itemDescription;
 			this.itemCount = itemCount;
 		}
-		var items = [];
+		var items = []; //All items that are in game
 		items.push(new item('intel', 'Enemy Intel', 'You have picked up a key piece of enemy inteligence, it can be used to help win the war', 1));	//locale 0
 		items.push(new item('na', 'na', 'na', 0));																									//locale 1
 		items.push(new item('na', 'na', 'na', 0));																									//locale 2
@@ -64,10 +64,11 @@
             var msg = "";
 			if(points===0)
 			{
-				msg = " You awaken on Atlatis in the Pegasus Galaxy. The Stargate is directly in front of you, you can use it to gate offworld. Be careful, for the planet"+ 
+				//Message to be displayed at beginning of game
+				msg = " You awaken on Atlatis in the Pegasus Galaxy. The Stargate is directly in front of you, you can use it to gate offworld. Be careful, for the planet "+ 
 				"you can gate to has both friendly people and enemies. You must attack the enemy base and obtain the key intel they have."+
 				"Do not attack the enemy base without a weapon and allies or you will surely die. The fate of Atlantis is in you hands."+
-				"Instructions: n: Go North s: Go South e: Go East w: Go West d: Dance h: Help i: Inventory p: Pickup. You may view these instructions again at any time by"+
+				"Instructions: n: Go North s: Go South e: Go East w: Go West d: Dance h: Help i: Inventory p: Pickup. You may view these instructions again at any time by "+
 				"pressing h. \n You are in the Gateroom";
 			}
 			else{
@@ -154,14 +155,17 @@
 			else if(textInput==='d' || textInput==='D'){
 				msg = 'you start dancing';
 				taPtr.value = history + "\n" + msg;
+				taDisplay.scrollTop = taDisplay.scrollHeight - taDisplay.clientHeight;
 			}
 			else if(textInput==='h' || textInput==='H'){
 				msg = ' n: Go North \n s: Go South \n e: Go East \n w: Go West \n d: Dance \n h: Help \n i: Inventory \n p: Pickup';
 				taPtr.value = history + "\n" + msg;
+				taDisplay.scrollTop = taDisplay.scrollHeight - taDisplay.clientHeight;
 			}
 			else if(textInput==='i' || textInput==='I'){
 				msg = 'The items currently in your inventory are '+ inventory.toString() + '.'; 
 				taPtr.value = history + "\n" + msg;
+				taDisplay.scrollTop = taDisplay.scrollHeight - taDisplay.clientHeight;
 			}
 			else if(textInput==='p' || textInput==='P'){
 				pickup(currentLocale);
@@ -173,6 +177,7 @@
 			}
 			 
 		}
+		//arrow key based movement
 		document.onkeydown = function() {
 		switch (window.event.keyCode) {
 			case 13:
@@ -195,8 +200,8 @@
 		
 		function score(){
 			var pointPtr = document.getElementById('pointDisplay');
-			points += locales[currentLocale].points;
-			locales[currentLocale].points=0;
+			points += locales[currentLocale].points; //takes the five points from array
+			locales[currentLocale].points=0; // and replaces with zero so it cant be re-added 
 			msg=points;
 			pointPtr.value = msg;
 		}
@@ -213,6 +218,7 @@
 				msg = 'There is nothing here to pickup.';
 			}
 			taPtr.value = history + "\n" + msg;
+			taDisplay.scrollTop = taDisplay.scrollHeight - taDisplay.clientHeight;
 		}
 		
 			
