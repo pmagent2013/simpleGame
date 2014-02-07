@@ -18,27 +18,31 @@
 		var name = "";
 		var description = "";
 		var item = "";
-		var locale = function(id, name, description, item){
+		var points;
+		var locale = function(id, name, description, item, points){
 			this.id = id;
 			this.name = name;
 			this.description = description;
 			this.item = item;
+			this.points = points;
 		}
 		var locales = [];
-		locales.push(new locale('enemyBase', 'Enemy Base', 'You have entered the enemy base', 'none'));
-		locales.push(new locale('offworld', 'Offworld', 'You are offworld', 'none'));
-		locales.push(new locale('village', 'Village', 'You are in a village', 'none'));
-		locales.push(new locale('office', 'Office', 'You are in an office', 'none'));
-		locales.push(new locale('gateroom', 'Gateroom', 'You are in the gateroom', 'none'));
-		locales.push(new locale('armory', 'Armory', 'You are in the armory', 'gun'));
-		locales.push(new locale('sleepingquaters', 'Sleeping Quarters', 'You are in the sleeping quarters', 'none'));
-		locales.push(new locale('laboratory', 'Laboratory', 'You are in the laboratory', 'none'));
-		locales.push(new locale('cafe', 'Cafe', 'You are in the cafe', 'none'));
+		locales.push(new locale('enemyBase', 'Enemy Base', 'You have entered the enemy base', 'none', 5));
+		locales.push(new locale('offworld', 'Offworld', 'You are offworld', 'none', 5));
+		locales.push(new locale('village', 'Village', 'You are in a village', 'none', 5));
+		locales.push(new locale('office', 'Office', 'You are in an office', 'none', 5));
+		locales.push(new locale('gateroom', 'Gateroom', 'You are in the gateroom', 'none', 5));
+		locales.push(new locale('armory', 'Armory', 'You are in the armory', 'gun', 5));
+		locales.push(new locale('sleepingquaters', 'Sleeping Quarters', 'You are in the sleeping quarters', 'none', 5));
+		locales.push(new locale('laboratory', 'Laboratory', 'You are in the laboratory', 'none', 5));
+		locales.push(new locale('cafe', 'Cafe', 'You are in the cafe', 'none', 5));
 		var currentLocale=map[x][y];
 		var inventoryArray = [];
+		var pointsArray = [];
 		function updateDisplay() {
             var msg = "";
 			msg = locales[currentLocale].description;
+			score();
 			var taPtr = document.getElementById("taDisplay");
             var history = taPtr.value;
             taPtr.value = msg + "\n" + history;
@@ -50,7 +54,6 @@
 			if (dir === 'north'){
 				if(map[x-1][y]!=-1)
 				currentLocale=map[x-=1][y];
-				
 			}
 			else if (dir === 'south'){
 				if(map[x+1][y]!=-1)
@@ -152,11 +155,9 @@
 		};
 		
 		function score(){
-			visit="alreadyVisited"+currentLocale;
 			var pointPtr = document.getElementById('pointDisplay');
-			if((visit)!=true){			
-			points+=5;
-			}
+			points += locales[currentLocale].points;
+			locales[currentLocale].points=0;
 			msg=points;
 			pointPtr.value = msg;
 		}			
