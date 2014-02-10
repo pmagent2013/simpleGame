@@ -7,10 +7,11 @@
          // Global Variables
 		var points = 0;
 		//var gun;
-		var x=2;
+		var x=3;
 		var y=2;
 		var map=[[-1,-1,-1,-1,-1],
                  [-1, 0, 1, 2,-1],
+				 [-1,-1,-2,-1,-1],
                  [-1, 3, 4, 5,-1],
                  [-1, 6, 7, 8,-1],
                  [-1,-1,-1,-1,-1]];
@@ -33,8 +34,8 @@
 		var locales = []; //all locations that are in game
 		locales.push(new locale('enemyBase', 'Enemy Base', 'You have entered the enemy base', 'intel', 5)); 						//locale 0
 		locales.push(new locale('offworld', 'Offworld', 'You are offworld', 'none', 5));											//locale 1
-		locales.push(new locale('village', 'Village', 'You are in a village', 'none', 5));											//locale 2
-		locales.push(new locale('office', 'Office', 'You are in an office', 'stapler', 5));											//locale 3
+		locales.push(new locale('village', 'Village', 'You are in a village', 'allies', 5));										//locale 2
+		locales.push(new locale('office', 'Office', 'You are in an office', 'none', 5));											//locale 3
 		locales.push(new locale('gateroom', 'Gateroom', 'You are in the gateroom', 'none', 5));										//locale 4
 		locales.push(new locale('armory', 'Armory', 'You are in the armory', 'gun', 5));											//locale 5
 		locales.push(new locale('sleepingquaters', 'Sleeping Quarters', 'You are in the sleeping quarters', 'none', 5));			//locale 6
@@ -49,8 +50,8 @@
 		var items = []; //All items that are in game
 		items.push(new item('intel', 'Enemy Intel', 'You have picked up a key piece of enemy inteligence, it can be used to help win the war', 1));	//locale 0
 		items.push(new item('na', 'na', 'na', 0));																									//locale 1
-		items.push(new item('na', 'na', 'na', 0));																									//locale 2
-		items.push(new item('stapler', 'Stapler', 'You have picked up a stapler, it can staple paper together', 1));								//locale 3
+		items.push(new item('allies', 'Allies', 'You have aquired allied to aide in your fight', 1));												//locale 2													//locale 2
+		items.push(new item('na', 'na', 'na', 0));																									//locale 3
 		items.push(new item('na', 'na', 'na', 0));																									//locale 4
 		items.push(new item('gun', 'Assault Rifle', 'You have picked up an Assault Rifle, it can be used to kill you enemies', 1));					//locale 5
 		items.push(new item('na', 'na', 'na', 0));																									//locale 6
@@ -84,11 +85,15 @@
         function go(dir, currentLocation) {
             var before = currentLocale;
 			if (dir === 'north'){
-				if(map[x-1][y]!=-1)
+				if(map[x-1][y]===-2)
+				currentLocale=map[x-=2][y];
+				else if(map[x-1][y]!=-1)
 				currentLocale=map[x-=1][y];
 			}
 			else if (dir === 'south'){
-				if(map[x+1][y]!=-1)
+				if(map[x+1][y]===-2)
+				currentLocale=map[x+=2][y];
+				else if(map[x+1][y]!=-1)
 				currentLocale=map[x+=1][y];
 			}
 			else if (dir === 'east'){
@@ -134,40 +139,41 @@
 			}
 		}
 		function textBasedMovement(){
-			var textInput=(document.getElementById('textInputBox').value);
+			var textIn=(document.getElementById('textInputBox').value);
+			var textInput=textIn.toLowerCase();
 			var taPtr = document.getElementById('taDisplay');
 			var history = taPtr.value;
-			if(textInput==='n' || textInput==='N'){
+			if(textInput==='n'){
 				go('north', currentLocale);
 			}
-			else if(textInput==='s' || textInput==='S'){
+			else if(textInput==='s'){
 				go('south', currentLocale);
 			}
-			else if(textInput==='e' || textInput==='E'){
+			else if(textInput==='e'){
 				go('east', currentLocale);
 			}
-			else if(textInput==='w' || textInput==='W'){
+			else if(textInput==='w'){
 				go('west', currentLocale);
 			}
-			else if(textInput==='q' || textInput==='Q'){
+			else if(textInput==='q'){
 				go('quit', currentLocale);
 			}
-			else if(textInput==='d' || textInput==='D'){
+			else if(textInput==='d'){
 				msg = 'you start dancing';
 				taPtr.value = history + "\n" + msg;
 				taDisplay.scrollTop = taDisplay.scrollHeight - taDisplay.clientHeight;
 			}
-			else if(textInput==='h' || textInput==='H'){
+			else if(textInput==='h'){
 				msg = ' n: Go North \n s: Go South \n e: Go East \n w: Go West \n d: Dance \n h: Help \n i: Inventory \n p: Pickup';
 				taPtr.value = history + "\n" + msg;
 				taDisplay.scrollTop = taDisplay.scrollHeight - taDisplay.clientHeight;
 			}
-			else if(textInput==='i' || textInput==='I'){
+			else if(textInput==='i'){
 				msg = 'The items currently in your inventory are '+ inventory.toString() + '.'; 
 				taPtr.value = history + "\n" + msg;
 				taDisplay.scrollTop = taDisplay.scrollHeight - taDisplay.clientHeight;
 			}
-			else if(textInput==='p' || textInput==='P'){
+			else if(textInput==='p'){
 				pickup(currentLocale);
 			}
 			
