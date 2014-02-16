@@ -118,27 +118,27 @@
             var before = currentLocale;
             if (dir === 'north'){
                 if(map[x-1][y]===-2)
-                currentLocale=map[x-=2][y]; //if in gateroom use wormhole to jump to offworld
+                    currentLocale=map[x-=2][y]; //if in gateroom use wormhole to jump to offworld
                 else if(map[x-1][y]!=-1)
-                currentLocale=map[x-=1][y];
+                    currentLocale=map[x-=1][y];
             }
             else if (dir === 'south'){
                 if(map[x+1][y]===-2)
-                currentLocale=map[x+=2][y]; //if offworld use wormhole to jump to gateroom
+                    currentLocale=map[x+=2][y]; //if offworld use wormhole to jump to gateroom
                 else if(map[x+1][y]!=-1)
-                currentLocale=map[x+=1][y];
+                    currentLocale=map[x+=1][y];
             }
             else if (dir === 'east'){
                 if(map[x][y+1]!=-1)
-                currentLocale=map[x][y+=1];
+                    currentLocale=map[x][y+=1];
             }
             else if (dir === 'west'){
                 if(map[x][y-1]!=-1)
-                currentLocale=map[x][y-=1];
+                    currentLocale=map[x][y-=1];
             }
             buttonDisable(); //disables buttons based on available moves the player can make
             if (currentLocale != before) {
-               updateDisplay(); //displays the new text
+                updateDisplay(); //displays the new text
             }
          }
         function buttonDisable(){ //if the player cannot move in a certain direction the game informs them of this by disabling the corresponding directional button
@@ -205,38 +205,38 @@
             }
             else if(textInput==='j'){ /* Easter EGG */
                 if(locales[currentLocale].id===8){
-                msg = 'You eat the blue jello.';
-                taPtr.value = history + "\n" + msg;
-                taDisplay.scrollTop = taDisplay.scrollHeight - taDisplay.clientHeight;
-                points+=jelloEasterEggPoints;
-                score();
-                jelloEasterEggPoints=0;
+                    msg = 'You eat the blue jello.';
+                    taPtr.value = history + "\n" + msg;
+                    taDisplay.scrollTop = taDisplay.scrollHeight - taDisplay.clientHeight;
+                    points+=jelloEasterEggPoints;
+                    score();
+                    jelloEasterEggPoints=0;
                 }
             }
             else if(textInput==='k'){ /* Easter EGG */
                 if(locales[currentLocale].id===3){
-                msg = 'You try to kiss Colonel Samantha Carter. She denies you. You are being placed under review for inappropriate conduct in the workplace. Jack O\'Neill would also like to have a word with you.';
-                taPtr.value = history + "\n" + msg;
-                taDisplay.scrollTop = taDisplay.scrollHeight - taDisplay.clientHeight;
-                points+=kissEasterEggPoints;
-                score();
-                kissEasterEggPoints=0;
+                    msg = 'You try to kiss Colonel Samantha Carter. She denies you. You are being placed under review for inappropriate conduct in the workplace. Jack O\'Neill would also like to have a word with you.';
+                    taPtr.value = history + "\n" + msg;
+                    taDisplay.scrollTop = taDisplay.scrollHeight - taDisplay.clientHeight;
+                    points+=kissEasterEggPoints;
+                    score();
+                    kissEasterEggPoints=0;
                 }
                 else if(locales[currentLocale].id===6){ /* Easter EGG */
-                msg = 'You try to kiss Ronan Dex, you now have a broken nose, and jaw, and arm, both legs, actually, you are pretty much dead.';
-                taPtr.value = history + "\n" + msg;
-                taDisplay.scrollTop = taDisplay.scrollHeight - taDisplay.clientHeight;
-                points+=kissEasterEggPoints;
-                score();
-                kissEasterEggPoints=0;
+                    msg = 'You try to kiss Ronan Dex, you now have a broken nose, and jaw, and arm, both legs, actually, you are pretty much dead.';
+                    taPtr.value = history + "\n" + msg;
+                    taDisplay.scrollTop = taDisplay.scrollHeight - taDisplay.clientHeight;
+                    points+=kissEasterEggPoints;
+                    score();
+                    kissEasterEggPoints=0;
                 }
                 else if(locales[currentLocale].id===7){ /* Easter EGG */
-                msg = 'You try to kiss Dr. Rodney McKay, why, just why.';
-                taPtr.value = history + "\n" + msg;
-                taDisplay.scrollTop = taDisplay.scrollHeight - taDisplay.clientHeight;
-                points+=kissEasterEggPoints;
-                score();
-                kissEasterEggPoints=0;
+                    msg = 'You try to kiss Dr. Rodney McKay, why, just why.';
+                    taPtr.value = history + "\n" + msg;
+                    taDisplay.scrollTop = taDisplay.scrollHeight - taDisplay.clientHeight;
+                    points+=kissEasterEggPoints;
+                    score();
+                    kissEasterEggPoints=0;
                 }
             }
             else if(textInput==='p'){ //p = pickup.  allows the user to pickup an item at their current location if their is one to be picked up
@@ -318,18 +318,7 @@
                 taDisplay.scrollTop = taDisplay.scrollHeight - taDisplay.clientHeight;
             }
         }
-        
-        /* pretty sure i didnt need these in my code. keeping for now just to be safe
-        var locID = "";
-        var name = "";
-        var description = "";
-        var item = "";
-        var points;
-        var itemID = "";
-        var itemName = "";
-        var itemDescription = "";
-        var itemCount = "";
-        */
+       
       </script>
    </head>
    
